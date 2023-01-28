@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-function Form() {
+function Form({ setLoaded }) {
   // const [message, setMessage] = useState("Loading");
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
@@ -10,16 +10,19 @@ function Form() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setTitle("");
+    setPrice("");
+    setDescription("");
     const newProduct = {
       title,
       price,
       description,
     };
 
-    axios
-      .post("http://localhost:5001/product", newProduct)
-      .then((res) => console.log(res.data))
-      .catch((err) => console.log(err));
+    axios.post("http://localhost:5001/product", newProduct).then((res) => {
+      console.log(res.data);
+    });
+    setLoaded(false).catch((err) => console.log(err));
   };
 
   // useEffect(() => {
